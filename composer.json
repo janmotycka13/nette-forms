@@ -1,0 +1,12 @@
+{
+	"name": "janmotycka/nette-forms",
+	"type": "library",
+	"description": "Extension of Nette/Application/UI/Form with other controls",
+	"license": "MIT 2.0",
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-4": {
+			"JanMotycka\\NettForms": "src"
+		}
+	}
+}
