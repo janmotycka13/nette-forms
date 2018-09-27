@@ -19,7 +19,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"JanMotycka\\NetteForms": "src"
+			"JanMotycka\\NetteForms\\": "src"
 		}
 	}
 }
