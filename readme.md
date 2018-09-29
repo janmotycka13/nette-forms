@@ -20,6 +20,13 @@ extensions:
 Add DateInput with today's date
 ```php
 $form->addDateInput('date', 'Datum')
-	->setDafaultValue(new DateTime())
+	->setDefaultValue(new DateTime())
 	->setBadFormatAlert('This field has no date format');
+```
+
+#### WysiwygTextArea
+Add WysiwygTextArea for text styling 
+```php
+$form->addWysiwygTextArea('wysiwyg')
+	->setDefaultValue(Html::el('p')->addText('nette')->render());
 ```
