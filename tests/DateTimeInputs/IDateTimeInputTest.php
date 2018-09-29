@@ -7,11 +7,11 @@ declare(strict_types=1);
  * @skip
  */
 
-namespace JanMotycka\Forms\Tests\DateTime;
+namespace JanMotycka\Forms\Tests\DateTimeInputs;
 
 /**
  * Interface IDateInput
- * @package JanMotycka\Forms\Tests\DateTime
+ * @package JanMotycka\Forms\Tests\DateTimeInputs
  *
  */
 interface IDateTimeInputTest {

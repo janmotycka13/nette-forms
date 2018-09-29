@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @author Ing. Jan Motyčka <janmotycka@post.cz>
  */
 
-namespace JanMotycka\Forms\Tests\DateTime;
+namespace JanMotycka\Forms\Tests\DateTimeInputs;
 
 use JanMotycka\Forms\Controls\DateInput;
 use Nette\Forms\Form;
@@ -55,7 +55,7 @@ class DateInputTest extends TestCase implements IDateTimeInputTest {
 			$control->setDefaultValue((new DateTime())->format('d.m.Y'));
 		});
 
-		//tests DateTime value as default value
+		//tests DateTimeInputs value as default value
 		Assert::noError(function () {
 			$form = new Form;
 			$control = $form->addDateInput('date');
