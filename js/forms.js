@@ -14,3 +14,7 @@ $(document).ready(function () {
 Nette.validators.JanMotyckaFormsRulesFormRules_validateDate = function(elem, args, val) {
 	return val !== "" ? moment(val, format).isValid() : true;
 };
+
+tinymce.init({
+	selector: '.wysiwyg'
+});
