@@ -7,7 +7,7 @@ Extension of Nette/Forms with other controls
 composer require janmotycka/nette-forms
 ```
 - Include js/forms.js (or copy content to @layout.latte)
-- Must be installed: **[Bootstrap 4](https://www.npmjs.com/package/bootstrap)**, **[netteForms.js](https://www.npmjs.com/package/nette-forms)**, **[bootstrap-datepicker](https://www.npmjs.com/package/bootstrap-datepicker)** and **[Moment.js](https://www.npmjs.com/package/moment)**
+- Must be installed: **[Bootstrap 4](https://www.npmjs.com/package/bootstrap)**, **[netteForms.js](https://www.npmjs.com/package/nette-forms)**, **[bootstrap-datepicker](https://www.npmjs.com/package/bootstrap-datepicker)**, **[Moment.js](https://www.npmjs.com/package/moment)** and 
 - Add in your `config.neon`:
   
 ```php
