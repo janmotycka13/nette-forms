@@ -12,5 +12,5 @@ $(document).ready(function () {
  * @return { boolean }
  */
 Nette.validators.JanMotyckaFormsRulesFormRules_validateDate = function(elem, args, val) {
-	return moment(val, format).isValid();
+	return val !== "" ? moment(val, format).isValid() : true;
 };
