@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace JanMotycka\Forms\DI;
 
+use JanMotycka\Forms\Controls\TimeInput;
 use JanMotycka\Forms\Controls\WysiwygTextArea;
 use Nette;
 use Nette\DI\CompilerExtension;
@@ -37,6 +38,16 @@ class FormsExtension extends CompilerExtension {
 				return $component;
 			}
 			);', Container::class, Container::class, DateInput::class
+		));
+
+		$initialize->addBody(sprintf(
+			'%s::extensionMethod(\'addTimeInput\',
+			function (%s $form, $name, $title = \'Please insert time\') {
+				$component = new %s($title);
+				$form->addComponent($component, $name);
+				return $component;
+			}
+			);', Container::class, Container::class, TimeInput::class
 		));
 
 		$initialize->addBody(sprintf(

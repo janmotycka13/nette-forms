@@ -8,36 +8,29 @@ declare(strict_types=1);
 
 namespace JanMotycka\Forms\Controls;
 
-use JanMotycka\Forms\Utils\Validators\DateTimeValidators;
 use Nette;
-use Nette\Utils\DateTime;
-use Nette\Forms\Controls\TextInput;
 use Nette\Utils\Html;
-use Nette\Utils\Validators;
 use Nette\Forms\ISubmitterControl;
+use Nette\Utils\Validators;
+use Nette\Utils\DateTime;
 use JanMotycka\Forms\Rules\FormRules;
-use Tracy\Debugger;
+use JanMotycka\Forms\Utils\Validators\DateTimeValidators;
 
-
-/**
- * Class DateInput
- * @package JanMotycka\Forms\Controls
- */
-class DateInput extends AbstractDateTimeInput {
+class TimeInput extends AbstractDateTimeInput {
 
 	use Nette\SmartObject;
 
-	/** @var string  */
-	public const SELECTOR = 'datepicker';
+	/** @var string */
+	public const SELECTOR = 'timepicker';
 
 	/**
-	 * DateInput constructor.
+	 * TimeInput constructor.
 	 * @param null|string $label
 	 * @param string      $format
 	 */
-	public function __construct(?string $label, string $format = 'd.m.Y') {
+	public function __construct(?string $label, string $format = 'H:i') {
 		$this->format = $format;
-		$this->badFormatAlert = 'Value must be date';
+		$this->badFormatAlert = 'Value must be time';
 		parent::__construct($label, $this->format);
 	}
 
@@ -45,7 +38,7 @@ class DateInput extends AbstractDateTimeInput {
 	 * @return Html
 	 */
 	public function getControl(): Html {
-		$this->addRule(FormRules::DATE, $this->badFormatAlert);
+		$this->addRule(FormRules::TIME, $this->badFormatAlert);
 
 		$control = parent::getControl();
 
@@ -59,9 +52,9 @@ class DateInput extends AbstractDateTimeInput {
 	}
 
 	/**
-	 * @return DateTime|null
+	 * @return null|string
 	 */
-	public function getValue(): ?DateTime {
+	public function getValue(): ?string {
 		$validate = true; //Whether this element should be validated?
 		$name = $this->getName();
 		$isSubmitted = $this->getForm()->isSubmitted() instanceof ISubmitterControl;
@@ -84,7 +77,10 @@ class DateInput extends AbstractDateTimeInput {
 		}
 
 		try {
-			return new DateTime( (string) $this->value );
+			//try to create datetime from string input value if has not bad format
+			new DateTime((string)$this->value);
+
+			return $this->value;
 		}
 		catch (\Exception $exception) {
 			if ($validate) {
@@ -95,16 +91,11 @@ class DateInput extends AbstractDateTimeInput {
 		}
 	}
 
-	/**
-	 * @param mixed $value
-	 * @throws Nette\InvalidArgumentException
-	 * @return DateInput
-	 */
 	public function setDefaultValue($value): self {
 		if (Validators::isNone($value)) {
 			parent::setDefaultValue('');
 		} else if (!DateTimeValidators::isDateTime($value)) {
-			throw new Nette\InvalidArgumentException('Default value is not date');
+			throw new Nette\InvalidArgumentException('Default value is not time');
 		} else if ($value instanceof DateTime) {
 			parent::setDefaultValue($value->format($this->format));
 		} else {

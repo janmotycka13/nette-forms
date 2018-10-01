@@ -22,11 +22,11 @@ final class DateTimeValidators extends Validators {
 	use Nette\SmartObject;
 
 	/**
-	 * Check if value is date
+	 * Check if value is datetime
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function isDate($value): bool {
+	public static function isDateTime($value): bool {
 		if ($value instanceof PHPDateTime) {
 			return true;
 		} else {

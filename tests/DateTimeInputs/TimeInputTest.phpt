@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 /**
- * Test: Check custom DateInput behavior.
+ * Test: Check custom TimeInput behavior.
  * @author Ing. Jan Motyčka <janmotycka@post.cz>
  */
 
+
 namespace JanMotycka\Forms\Tests\DateTimeInputs;
 
-use JanMotycka\Forms\Controls\DateInput;
+use JanMotycka\Forms\Controls\TimeInput;
 use Nette\Forms\Form;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
@@ -23,7 +24,7 @@ $container = require __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class DateInputTest extends TestCase {
+class TimeInputTest extends TestCase {
 
 	/** @var Container */
 	private $container;
@@ -42,49 +43,46 @@ class DateInputTest extends TestCase {
 	}
 
 	public function testSetDefaultValue(): void {
-		//tests string value (not contains date format) as default value
+		//tests string value (not contains time format) as default value
 		Assert::exception(function () {
 			$form = new Form;
-			$control = $form->addDateInput('date');
-			$control->setDefaultValue('test date');
+			$control = $form->addTimeInput('time');
+			$control->setDefaultValue('test time');
 		}, InvalidArgumentException::class);
 
 		//tests string value (contains date format) as default value
 		Assert::noError(function () {
 			$form = new Form;
-			$control = $form->addDateInput('date');
-			$control->setDefaultValue((new DateTime)->format('d.m.Y'));
+			$control = $form->addTimeInput('time');
+			$control->setDefaultValue((new DateTime)->format('H:i'));
 		});
 
 		//tests DateTimeInputs value as default value
 		Assert::noError(function () {
 			$form = new Form;
-			$control = $form->addDateInput('date');
+			$control = $form->addTimeInput('time');
 			$control->setDefaultValue(new DateTime);
 		});
 	}
 
 	/**
-	 * Tests whether the control does not add a datepicker css class if the html type is set to date and
+	 * Tests whether the control does not add a timepicker css class if the html type is set to date and
 	 * conversely
 	 */
 	public function testHtmlClass(): void {
 		$form = new Form;
-		$d1 = $form->addDateInput('d1')->setType('date');
-		$d2 = $form->addDateInput('d2');
+		$t1 = $form->addTimeInput('t1')->setType('date');
+		$t2 = $form->addTimeInput('t2');
 
-		Assert::notContains(DateInput::SELECTOR, $d1->getControl()->getAttribute('class'));
-		Assert::contains(DateInput::SELECTOR, $d2->getControl()->getAttribute('class'));
+		Assert::notContains(TimeInput::SELECTOR, $t1->getControl()->getAttribute('class'));
+		Assert::contains(TimeInput::SELECTOR, $t2->getControl()->getAttribute('class'));
 	}
 
-	/**
-	 * Tests whether the value obtained corresponds to the expected value
-	 */
 	public function testReturnValue(): void {
 		$form = new Form;
-		$form->addDateInput('date1')->setValue((new DateTime)->format('d.m.Y'));
-		$form->addDateInput('date2')->setValue('');
-		$form->addDateInput('date3')->setValue(null);
+		$form->addTimeInput('time1')->setValue((new DateTime())->format('H:i'));
+		$form->addTimeInput('time2')->setValue('');
+		$form->addTimeInput('time3')->setValue(null);
 		$form->addSubmit('send', 'Send');
 		$form->validate();
 
@@ -92,9 +90,9 @@ class DateInputTest extends TestCase {
 		Assert::true($form->isSuccess());
 
 		$values = $form->getValues(true);
-		Assert::type(DateTime::class, $values['date1']);
-		Assert::null($values['date2']);
-		Assert::null($values['date3']);
+		Assert::type('string', $values['time1']);
+		Assert::null($values['time2']);
+		Assert::null($values['time3']);
 	}
 
 	/**
@@ -104,7 +102,7 @@ class DateInputTest extends TestCase {
 	 */
 	public function testValidValues($value): void {
 		$form = new Form;
-		$form->addDateInput('date')->setValue($value);
+		$form->addTimeInput('time')->setValue($value);
 		$form->addSubmit('send', 'Send');
 		$form->validate();
 
@@ -116,7 +114,7 @@ class DateInputTest extends TestCase {
 	 * @return array
 	 */
 	public function getValidValues(): array {
-		return [['27.09.2018'], ['1.9.2018'], ['2018-09-27'],];
+		return [['09:30'], ['9:30'], ['00:00'],];
 	}
 
 	/**
@@ -126,7 +124,7 @@ class DateInputTest extends TestCase {
 	 */
 	public function testInvalidValues($value): void {
 		$form = new Form;
-		$form->addDateInput('date')->setValue($value);
+		$form->addTimeInput('time')->setValue($value);
 		$form->addSubmit('send', 'Send');
 		$form->validate();
 
@@ -141,16 +139,13 @@ class DateInputTest extends TestCase {
 	 * @return array
 	 */
 	public function getInvalidValues(): array {
-		return [['27..09.2018'], ['nette'], ['5'], [123],];
+		return [['08::40'], ['nette'], ['5'], [123],];
 	}
 
-	/**
-	 * Tests whether control is filled if is it set.
-	 */
 	public function testFilled(): void {
 		$form = new Form;
-		$control1 = $form->addDateInput('date1')->setValue(new DateTime())->setRequired(true);
-		$control2 = $form->addDateInput('date2')->setRequired(true);
+		$control1 = $form->addTimeInput('time1')->setValue((new DateTime())->format('H:i'))->setRequired(true);
+		$control2 = $form->addTimeInput('time2')->setRequired(true);
 		$form->addSubmit('send', 'Send');
 		$form->validate();
 
@@ -159,6 +154,7 @@ class DateInputTest extends TestCase {
 		Assert::true($control2->hasErrors());
 	}
 
+
 }
 
-(new DateInputTest($container))->run();
+(new TimeInputTest($container))->run();

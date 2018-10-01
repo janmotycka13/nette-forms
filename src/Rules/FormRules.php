@@ -23,10 +23,27 @@ final class FormRules {
 	/** @var string */
 	public const DATE = FormRules::class . '::validateDate';
 
+	/** @var string */
+	public const TIME = FormRules::class . '::validateTime';
+
+	/**
+	 * @param IControl $control
+	 * @return bool
+	 */
 	public static function validateDate(IControl $control): bool {
 		$value = $control->getValue();
 
-		return DateTimeValidators::isNone($value) ? true : DateTimeValidators::isDate($value);
+		return DateTimeValidators::isNone($value) ? true : DateTimeValidators::isDateTime($value);
+	}
+
+	/**
+	 * @param IControl $control
+	 * @return bool
+	 */
+	public static function validateTime(IControl $control): bool {
+		$value = $control->getValue();
+
+		return DateTimeValidators::isNone($value) ? true : DateTimeValidators::isTime($value);
 	}
 
 }

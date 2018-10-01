@@ -24,7 +24,15 @@ Add DateInput with today's date
 ```php
 $form->addDateInput('date', 'Datum')
 	->setDefaultValue(new DateTime())
-	->setBadFormatAlert('This field has no date format');
+	->setBadFormatAlert('This field has not date format');
+```
+
+#### TimeInput
+Add TimeInput for define 
+```php
+$form->addTimeInput('time', 'Čas')
+	->setDefaultValue(new DateTime())
+	->setBadFormatAlert('This field has not time format');
 ```
 
 #### WysiwygTextArea
