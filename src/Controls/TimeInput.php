@@ -91,6 +91,10 @@ class TimeInput extends AbstractDateTimeInput {
 		}
 	}
 
+	/**
+	 * @param $value
+	 * @return TimeInput
+	 */
 	public function setDefaultValue($value): self {
 		if (Validators::isNone($value)) {
 			parent::setDefaultValue('');
@@ -100,6 +104,24 @@ class TimeInput extends AbstractDateTimeInput {
 			parent::setDefaultValue($value->format($this->format));
 		} else {
 			parent::setDefaultValue($value);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param $value
+	 * @return TimeInput
+	 */
+	public function setValue($value): self {
+		if (Validators::isNone($value)) {
+			parent::setValue('');
+		} else if (!DateTimeValidators::isDateTime($value)) {
+			throw new Nette\InvalidArgumentException('Default value is not time');
+		} else if ($value instanceof DateTime) {
+			parent::setValue($value->format($this->format));
+		} else {
+			parent::setValue($value);
 		}
 
 		return $this;
