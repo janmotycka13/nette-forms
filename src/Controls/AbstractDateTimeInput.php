@@ -27,7 +27,7 @@ abstract class AbstractDateTimeInput extends TextInput {
 	/** @var array */
 	protected $attributes = [
 		'class'         => ['form-control'],
-		'autocomplete'  => 'false'
+		'autocomplete'  => 'off'
 	];
 
 	/**
