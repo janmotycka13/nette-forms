@@ -114,23 +114,5 @@ class DateInput extends AbstractDateTimeInput {
 		return $this;
 	}
 
-	/**
-	 * @param $value
-	 * @return DateInput
-	 */
-	public function setValue($value): self {
-		if (Validators::isNone($value)) {
-			parent::setValue('');
-		} else if (!DateTimeValidators::isDateTime($value)) {
-			throw new Nette\InvalidArgumentException('Default value is not date');
-		} else if ($value instanceof DateTime) {
-			parent::setValue($value->format($this->format));
-		} else {
-			parent::setValue($value);
-		}
-
-		return $this;
-	}
-
 
 }
